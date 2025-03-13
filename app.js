@@ -46,19 +46,52 @@ function addCityMarkers() {
             title: city.name
         }).addTo(map);
         
-        // 添加点击事件
+        // 增加点击区域
+        const clickRadius = city.clickRadius || 15;
+        const clickableArea = L.circle([city.lat, city.lng], {
+            radius: clickRadius * 1000,  // 转换为米
+            fillColor: 'transparent',
+            fillOpacity: 0,
+            stroke: false,
+            interactive: true
+        }).addTo(map);
+        
+        // 添加点击事件到标记
         marker.on('click', () => {
-            if (activeMarker) {
-                activeMarker.getElement().classList.remove('active');
-            }
-            marker.getElement().classList.add('active');
-            activeMarker = marker;
-            
-            getWeatherData(city);
+            activateCity(marker, city);
+        });
+        
+        // 添加点击事件到点击区域
+        clickableArea.on('click', () => {
+            activateCity(marker, city);
         });
         
         // 存储标记引用
-        markers[city.id] = marker;
+        markers[city.id] = {
+            marker: marker,
+            clickableArea: clickableArea
+        };
+    });
+}
+
+// 激活选中的城市
+function activateCity(marker, city) {
+    // 移除之前激活的标记样式
+    if (activeMarker) {
+        activeMarker.getElement().classList.remove('active');
+    }
+    
+    // 添加激活样式
+    marker.getElement().classList.add('active');
+    activeMarker = marker;
+    
+    // 获取天气数据
+    getWeatherData(city);
+    
+    // 平滑移动到城市位置
+    map.flyTo([city.lat, city.lng], 6, {
+        duration: 1.5,
+        easeLinearity: 0.25
     });
 }
 
@@ -79,6 +112,9 @@ async function getWeatherData(city) {
         // 模拟数据
         const data = await getMockWeatherData(city);
         
+        // 显示天气动画
+        displayWeatherAnimation(data.weather[0].main);
+        
         // 显示天气数据
         displayWeatherData(city, data);
     } catch (error) {
@@ -88,7 +124,94 @@ async function getWeatherData(city) {
                 获取天气数据时出错。<br>请稍后再试。
             </div>
         `;
+        
+        // 清除天气动画
+        document.getElementById('weather-animation-container').innerHTML = '';
     }
+}
+
+// 显示天气动画
+function displayWeatherAnimation(weatherMain) {
+    const animationContainer = document.getElementById('weather-animation-container');
+    const animationType = weatherAnimations[weatherMain] || 'cloudy';
+    
+    let animationHTML = '';
+    
+    switch (animationType) {
+        case 'sunny':
+            animationHTML = `
+                <div class="weather-animation sunny">
+                    <div class="sun"></div>
+                </div>
+            `;
+            break;
+        case 'cloudy':
+            animationHTML = `
+                <div class="weather-animation cloudy">
+                    <div class="cloud"></div>
+                    <div class="cloud"></div>
+                </div>
+            `;
+            break;
+        case 'rainy':
+            animationHTML = `
+                <div class="weather-animation rainy">
+                    <div class="cloud"></div>
+                    <div class="rain"></div>
+                    <div class="rain"></div>
+                    <div class="rain"></div>
+                    <div class="rain"></div>
+                    <div class="rain"></div>
+                </div>
+            `;
+            break;
+        case 'stormy':
+            animationHTML = `
+                <div class="weather-animation stormy">
+                    <div class="cloud"></div>
+                    <div class="lightning"></div>
+                </div>
+            `;
+            break;
+        case 'snowy':
+            animationHTML = `
+                <div class="weather-animation snowy">
+                    <div class="cloud"></div>
+                    <div class="snow"></div>
+                    <div class="snow"></div>
+                    <div class="snow"></div>
+                    <div class="snow"></div>
+                    <div class="snow"></div>
+                </div>
+            `;
+            break;
+        case 'misty':
+            animationHTML = `
+                <div class="weather-animation misty">
+                    <div class="fog"></div>
+                    <div class="fog"></div>
+                    <div class="fog"></div>
+                    <div class="fog"></div>
+                </div>
+            `;
+            break;
+    }
+    
+    // 添加动画效果
+    animationContainer.innerHTML = animationHTML;
+    
+    // 添加淡入效果
+    setTimeout(() => {
+        const animation = animationContainer.querySelector('.weather-animation');
+        if (animation) {
+            animation.style.opacity = '0';
+            animation.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                animation.style.opacity = '1';
+            }, 50);
+        }
+    }, 0);
 }
 
 // 模拟天气数据（仅用于演示）
@@ -193,6 +316,17 @@ function displayWeatherData(city, data) {
             </div>
         </div>
     `;
+    
+    // 添加淡入效果
+    const cityWeather = weatherDetails.querySelector('.city-weather');
+    if (cityWeather) {
+        cityWeather.style.opacity = '0';
+        cityWeather.style.transition = 'opacity 0.5s ease';
+        
+        setTimeout(() => {
+            cityWeather.style.opacity = '1';
+        }, 50);
+    }
 }
 
 // 页面加载完成后初始化应用
