@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f7fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+header h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.update-time {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+#map-container {
+    flex: 1 1 60%;
+    min-width: 300px;
+}
+
+#map {
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#weather-info {
+    flex: 1 1 30%;
+    min-width: 300px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.weather-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.weather-header h2 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.weather-header p {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+#weather-details {
+    min-height: 300px;
+}
+
+.placeholder-message {
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+    color: #95a5a6;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.city-weather {
+    padding: 15px 0;
+}
+
+.city-name {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.weather-main {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.temperature {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-right: 15px;
+}
+
+.weather-icon {
+    width: 60px;
+    height: 60px;
+}
+
+.weather-description {
+    text-transform: capitalize;
+    color: #7f8c8d;
+    margin-bottom: 15px;
+}
+
+.weather-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.weather-detail-item {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.detail-label {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    padding-top: 20px;
+    border-top: 1px solid #eaeaea;
+}
+
+/* 城市标记样式 */
+.city-marker {
+    background-color: #3498db;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    border: 2px solid white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.city-marker:hover {
+    background-color: #2980b9;
+    transform: scale(1.2);
+}
+
+.city-marker.active {
+    background-color: #e74c3c;
+    transform: scale(1.3);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+    
+    #map {
+        height: 400px;
+    }
+}
