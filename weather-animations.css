@@ -1,0 +1,197 @@
+/* 天气动画效果 */
+.weather-animation {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* 晴天动画 */
+.weather-animation.sunny {
+    background: linear-gradient(to bottom, #4a90e2, #87ceeb);
+}
+
+.sunny .sun {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: #ffeb3b;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #ffeb3b;
+    animation: sun-pulse 3s infinite alternate;
+}
+
+@keyframes sun-pulse {
+    0% { transform: translateX(-50%) scale(1); }
+    100% { transform: translateX(-50%) scale(1.1); box-shadow: 0 0 30px #ffeb3b; }
+}
+
+/* 多云动画 */
+.weather-animation.cloudy {
+    background: linear-gradient(to bottom, #5c8dc7, #a4c2e6);
+}
+
+.cloudy .cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    animation: cloud-move 15s infinite linear;
+}
+
+.cloudy .cloud:nth-child(1) {
+    top: 30px;
+    left: -50px;
+    width: 80px;
+    height: 30px;
+    opacity: 0.8;
+}
+
+.cloudy .cloud:nth-child(2) {
+    top: 50px;
+    left: -80px;
+    width: 100px;
+    height: 40px;
+    animation-delay: -5s;
+}
+
+@keyframes cloud-move {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(100% + 100px)); }
+}
+
+/* 雨天动画 */
+.weather-animation.rainy {
+    background: linear-gradient(to bottom, #4a6fa5, #7694b8);
+}
+
+.rainy .cloud {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 40px;
+    background: #b3b3b3;
+    border-radius: 50px;
+}
+
+.rainy .rain {
+    position: absolute;
+    top: 60px;
+    width: 2px;
+    height: 15px;
+    background: #a4c2e6;
+    animation: rain-fall 1s infinite linear;
+}
+
+.rainy .rain:nth-child(2) { left: 30%; animation-delay: -0.2s; }
+.rainy .rain:nth-child(3) { left: 40%; animation-delay: -0.5s; }
+.rainy .rain:nth-child(4) { left: 50%; animation-delay: -0.7s; }
+.rainy .rain:nth-child(5) { left: 60%; animation-delay: -0.3s; }
+.rainy .rain:nth-child(6) { left: 70%; animation-delay: -0.6s; }
+
+@keyframes rain-fall {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(40px); opacity: 0.3; }
+}
+
+/* 雷雨动画 */
+.weather-animation.stormy {
+    background: linear-gradient(to bottom, #34495e, #5d6d7e);
+}
+
+.stormy .cloud {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 40px;
+    background: #4a4a4a;
+    border-radius: 50px;
+}
+
+.stormy .lightning {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 30px solid #ffeb3b;
+    opacity: 0;
+    animation: lightning-flash 3s infinite;
+}
+
+@keyframes lightning-flash {
+    0%, 95%, 100% { opacity: 0; }
+    96%, 99% { opacity: 1; }
+}
+
+/* 雪天动画 */
+.weather-animation.snowy {
+    background: linear-gradient(to bottom, #7b8a9a, #a4b0be);
+}
+
+.snowy .cloud {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 40px;
+    background: #d9d9d9;
+    border-radius: 50px;
+}
+
+.snowy .snow {
+    position: absolute;
+    top: 60px;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: snow-fall 3s infinite linear;
+}
+
+.snowy .snow:nth-child(2) { left: 30%; animation-delay: -0.5s; }
+.snowy .snow:nth-child(3) { left: 40%; animation-delay: -1.5s; }
+.snowy .snow:nth-child(4) { left: 50%; animation-delay: -2s; }
+.snowy .snow:nth-child(5) { left: 60%; animation-delay: -1s; }
+.snowy .snow:nth-child(6) { left: 70%; animation-delay: -2.5s; }
+
+@keyframes snow-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(40px) rotate(360deg); opacity: 0.3; }
+}
+
+/* 雾天动画 */
+.weather-animation.misty {
+    background: linear-gradient(to bottom, #b8c6db, #d1d8e0);
+}
+
+.misty .fog {
+    position: absolute;
+    width: 100%;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50px;
+    animation: fog-move 8s infinite alternate;
+}
+
+.misty .fog:nth-child(1) { top: 20px; animation-delay: -1s; }
+.misty .fog:nth-child(2) { top: 40px; animation-delay: -2s; }
+.misty .fog:nth-child(3) { top: 60px; animation-delay: -3s; }
+.misty .fog:nth-child(4) { top: 80px; animation-delay: -4s; }
+
+@keyframes fog-move {
+    0% { transform: translateX(-10%); }
+    100% { transform: translateX(10%); }
+}
