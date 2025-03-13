@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国城市天气地图</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>中国主要城市天气</h1>
+            <p class="update-time">最后更新时间: <span id="update-time"></span></p>
+        </header>
+        
+        <main>
+            <div id="map-container">
+                <div id="map"></div>
+            </div>
+            
+            <div id="weather-info">
+                <div class="weather-header">
+                    <h2>城市天气信息</h2>
+                    <p>点击地图上的城市查看详细天气</p>
+                </div>
+                <div id="weather-details">
+                    <div class="placeholder-message">
+                        请在地图上选择一个城市
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>数据来源: OpenWeatherMap | 地图: Leaflet</p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="cities.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
